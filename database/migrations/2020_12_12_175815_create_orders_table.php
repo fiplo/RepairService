@@ -17,6 +17,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('name');
             $table->mediumText('body')->nullable();
+            $table->enum('status', ['ReadyForPickup', 'AwaitingManager', 'InProgress', 'OnHold', 'Delivered']);
+            $table->date('Estimated')->nullable();
             //$table->foreignId('user_id');
             //$table->foreignId('manager_id')->nullable();
             $table->timestamps();

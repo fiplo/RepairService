@@ -45,6 +45,7 @@
                     </div>
                 </div>
             </div>
+            <input class="form-control" id="status" name="status" type="hidden" value="AwaitingManager">
             <div class="row pt-4">
                 <button type="submit" class="btn btn-primary">Submit Order</button>
             </div>

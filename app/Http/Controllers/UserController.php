@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -47,9 +48,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $this->authorize('viewAny', User::class);
+        return view('users.show', [
+            'users' => \App\User::all(),
+        ]);
     }
 
     /**
@@ -81,6 +85,7 @@ class UserController extends Controller
         ]);
         $user->update(['type' => $request->input('type')]);
         $user->personaldetails->update($data);
+        $user->touch();
         return redirect("/user/{$user->id}");
     }
 

@@ -18,7 +18,8 @@ class OrderPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->type == 'Admin'
+        if($user->type == 'Manager') return true;
+        return $user->type == 'Admin';
     }
 
     /**
@@ -30,8 +31,9 @@ class OrderPolicy
      */
     public function view(User $user, Order $order)
     {
-        if($user->type == 'Admin') return true;
-        return $order->user->where('id', $user->id) > 0
+        if($user->type === 'Admin') return true;
+        if($order->user->count() == 1) return $user->type == 'Manager';
+        return $order->user->where('id', $user->id)->count() > 0;
     }
 
     /**
@@ -42,7 +44,7 @@ class OrderPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->type == 'Admin';
     }
 
     /**
@@ -68,7 +70,7 @@ class OrderPolicy
      */
     public function delete(User $user, Order $order)
     {
-        //
+        return $user->type == 'Admin';
     }
 
     /**
@@ -80,7 +82,7 @@ class OrderPolicy
      */
     public function restore(User $user, Order $order)
     {
-        //
+        return $user->type == 'Admin';
     }
 
     /**
@@ -92,6 +94,6 @@ class OrderPolicy
      */
     public function forceDelete(User $user, Order $order)
     {
-        //
+        return $user->type == 'Admin';
     }
 }

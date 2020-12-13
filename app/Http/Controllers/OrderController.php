@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Order;
 use App\User;
-
+use Carbon\Carbon;
 class OrderController extends Controller
 {
     public function __construct()
@@ -19,8 +19,8 @@ class OrderController extends Controller
      */
     public function index($order)
     {
-        //
         $result = Order::findOrFail($order);
+        $this->authorize('view', $result);
         if(!empty($result->user->where('type', 'Manager'))) $manager = $result->user->where('type', 'Manager')->first();
         return view('orders.index', [
             'order' => $result,
@@ -35,7 +35,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-                //
+        $this->authorize('create', Order::class);
         return view('orders.create', [
             'users' => User::all(),
         ]);
@@ -49,9 +49,12 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Order::class);
         $data = request()->validate([
             'name' => ['required', 'string'],
             'body' => '',
+            'status' => 'string',
+            'estimated' => '',
         ]);
         $users = \App\User::find($request->input('user_id'));
 
@@ -68,6 +71,7 @@ class OrderController extends Controller
      */
     public function show()
     {
+        $this->authorize('viewAny', Order::class);
         return view('orders.show', [
             'orders' => Order::all(),
             ]);
@@ -81,6 +85,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        $this->authorize('update', $order);
         if(!empty($order->user->where('type', 'Manager'))) $manager = $order->user->where('type', 'Manager')->first();
         return view('orders.edit', [
             'order' => $order,
@@ -98,9 +103,12 @@ class OrderController extends Controller
      */
     public function update(Request $request,Order $order)
     {
+        $this->authorize('update', $order);
         $data = $request->validate([
             'name' => 'string|required',
-            'body' => 'string'
+            'body' => '',
+            'status' => 'string',
+            'Estimated' => '',
         ]);
         if(!empty($request->input('manager')))
         {
@@ -110,6 +118,8 @@ class OrderController extends Controller
         {
             $target = [$request->input('client')];
         }
+        $order->updated_at = Carbon::now();
+        $order->save();
         $order->update($data);
         $order->user()->sync($target);
         return redirect("/order/{$order->id}");
@@ -121,8 +131,8 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Order $order)
     {
-        //
+        $this->authorize('destroy', $order);
     }
 }

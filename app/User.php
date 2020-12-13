@@ -39,6 +39,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public $timestamps = true;
+
     public function order()
     {
         return $this->belongsToMany(Order::class);
