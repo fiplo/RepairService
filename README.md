@@ -2,6 +2,8 @@
 ## <p style="text-align: center;">Internetinė sistema</p>
 ### Paulius Ratkevičius IFF-8/12
 
+Rekomenduoju atsidaryti ataskaitą web'e https://github.com/fiplo/RepairService/
+
 ## Užduotis
 
 7J. IT technikos garantinio remonto priėmimo-išdavimo (būsenos) registravimo sistema.
