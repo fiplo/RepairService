@@ -11,7 +11,9 @@
         <div class="row">
             <div class="col-8 offset-2">
                 <label for="body" class="col-md-4 col-form-label">Užsakymo Aprašymas</label>
-                <input id="body" type="text" class="form-control" name="body" value="{{ $order->body }}" disabled>
+                <div class="input-group">
+                    <textarea id="body" name="body" type="text" class="form-control" aria-label="With textarea" disabled>{{ $order->body }}</textarea>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -41,7 +43,7 @@
         <div class="row">
             <div class="col-8 offset-2">
                 <label for="Estimated" class="col-md-4 col-form-label">Numatyta data</label>
-                <input type="date" name="EStimated" id="EStimated" class="form-control" value={{$order->Estimated }} disabled>
+                <input type="date" name="EStimated" id="EStimated" class="form-control" value='{{$order->Estimated }}' disabled>
             </div>
         </div>
         <div class="row">

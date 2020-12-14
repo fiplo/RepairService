@@ -1,0 +1,41 @@
+@startuml
+|WebView|
+start
+:Pateikiama užsakymo ID;
+note right: Vartotojam to padaryti įprastai nereikia, perduodame per URL
+|#lightgray|E. Sistema|
+:Siunčiama MySql užklausa;
+|#lightblue|MySql|
+:Gražinama įrangos entry;
+|#lightgray|E. Sistema|
+if (Ar ivyko klaida?) then (taip)
+    |WebView|
+    #pink:Įrašas nerastas;
+    kill
+else
+    |WebView|
+    :Parodoma įrangos informacija;
+endif
+|WebView|
+if (Žiūri administratorius arba užsakymo Vadybininkas?) then (taip)
+    :Leidžiama modifikuoti laukus;
+    |#lightgray|E. Sistema|
+    if (Duota forma turi klaidas) then
+        |WebView|
+        #pink:Klaidos formoje;
+        kill
+    endif
+    |#lightblue|MySql|
+    :Duomenys įkeliami į duombazę;
+    |#lightgray|E. Sistema|
+    if (Ar ivyko klaida?) then (taip)
+        |WebView|
+        #pink:Klaida MySql;
+        kill
+    else
+        |WebView|
+        :Parodoma atnaujinta įrašo informacija;
+    endif
+endif
+stop
+@enduml

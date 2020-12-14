@@ -1,0 +1,27 @@
+@startuml
+|WebView|
+start
+|WebView|
+:Užpildomi duomenys duotoje formoje;
+|#lightgray|E. Sistema|
+if (Duota forma turi klaidas) then
+  |WebView|
+  #pink:Klaidos formoje;
+  kill
+elseif (Vartotojas jau egzistuoja) then
+  |WebView|
+  #pink:Varotojas jau egzistuoja;
+  kill
+endif
+|#lightblue|MySql|
+:Duomenys įkeliami į duombazę;
+|#lightgray|E. Sistema|
+if (Įvyko klaida duombazėje?) then
+  |WebView|
+  #pink:Klaida duombazėje;
+  kill
+endif
+|WebView|
+#lightgreen:Registracija baigta;
+stop
+@enduml

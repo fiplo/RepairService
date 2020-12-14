@@ -64,6 +64,7 @@ class UserController extends Controller
      */
     public function edit(\App\User $user)
     {
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
@@ -77,6 +78,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = \App\User::findOrFail($id);
+        $this->authorize('update', $user);
         $data = $request->validate([
             'name' => 'string|required',
             'surname' => 'string',

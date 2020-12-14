@@ -1,0 +1,29 @@
+@startuml
+|WebView|
+start
+:atsidarome formą;
+|#lightgray|E. Sistema|
+:Išrenkamas klientų sarašas;
+|#lightblue|MySql|
+:Išfiltruojami klientai;
+|WebView|
+:Išsirenkame vartotoją;
+:Užpildoma įrenginio forma;
+|#lightgray|E. Sistema|
+if (Duota forma turi klaidas) then
+  |WebView|
+  #pink:Klaidos formoje;
+  kill
+endif
+|#lightblue|MySql|
+:Duomenys įkeliami į duombazę;
+|#lightgray|E. Sistema|
+if (Įvyko klaida duombazėje?) then
+  |WebView|
+  #pink:Klaida duombazėje;
+  kill
+endif
+|WebView|
+#lightgreen:Registracija baigta;
+stop
+@enduml

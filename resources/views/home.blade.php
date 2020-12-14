@@ -18,7 +18,7 @@
     <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">Užsakymo id</th>
                     <th scope="col">Užsakymo Pavadinimas</th>
                     <th scope="col">Klientas</th>
                     <th scope="col">Vadybinkas</th>
@@ -29,6 +29,7 @@
             </thead>
             <tbody>
             @foreach (Auth::user()->order as $order)
+                @if($order->status != 'Delivered')
                 <tr>
                     <th scope="row">
                         {{$order->id}}
@@ -60,6 +61,7 @@
                         </a>
                     </td>
                 </tr>
+                @endif
             @endforeach
             </tbody>
         </table>

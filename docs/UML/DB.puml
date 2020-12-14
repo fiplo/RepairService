@@ -1,0 +1,42 @@
+@startuml DB
+
+object User {
+  -email : String
+  -password : String
+  -name : String
+  -type : UserType *--> UserType
+  -
+}
+
+object personal_details {
+    -name: String
+    -lastname: String
+    -phonenumber: Int
+    -user_id : Int
+}
+
+object order_user {
+ -user_id : Int
+ -order_id : Int
+}
+
+object Order {
+  +ordername : String
+  +desc : String
+  +owner : User
+  +manager : User
+  +created_at : Date
+  +updated_at : Date
+  +estimated_date : Date
+}
+
+map "UserTypes: Map<Integer, String>" as UserType {
+ 0 => Admin
+ 1 => Manager
+ 2 => Client
+}
+
+
+User "1..*" -- "1..*" Order : Turi
+
+@enduml

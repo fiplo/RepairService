@@ -21,7 +21,9 @@
         <div class="row">
             <div class="col-8 offset-2">
                 <label for="body" class="col-md-4 col-form-label">Užsakymo Aprašymas</label>
-                <input id="body" type="text" class="form-control" name="body" value="{{ $order->body }}">
+                <div class="input-group">
+                    <textarea id="body" name="body" type="text" class="form-control" aria-label="With textarea">{{ $order->body }}</textarea>
+                </div>
             </div>
         </div>
         <div class="row">

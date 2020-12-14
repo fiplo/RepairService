@@ -45,7 +45,7 @@
         </div>
         @can('update', $user)
         <div class="col-8 offset-2 pt-4">
-            <a role="button" class="btn btn-info btn-lg btn-block"  href="/user/{{ $user->id }}/edit">Edit this user</a>
+            <a role="button" class="btn btn-info btn-lg btn-block"  href="/user/{{ $user->id }}/edit">Redaguoti vartotoją</a>
         </div>
         @endcan
     </div>

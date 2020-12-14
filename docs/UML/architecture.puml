@@ -1,0 +1,38 @@
+@startuml
+left to right direction
+:Administratorius: as admin
+:Vadybininkas: as manager
+:Užsakovas: as client
+:User: as user
+package backend {
+    usecase "RegUser" as reg1
+    usecase "RegEquipment" as reg2
+    usecase "EditUser" as edit1
+    usecase "EditEquipment" as edit2
+}
+package frontend{
+    usecase "ViewInvoices" as view1
+    usecase "ViewInvoice" as view2
+    usecase "ViewInvoiceHistory" as view3
+    usecase "AcceptInvoice" as accept1
+    usecase "EditInvoiceState" as edit3
+}
+
+user <|-- admin
+user <|-- manager
+user <|-- client
+
+(view1) <|-- (accept1)
+
+admin --> reg1
+admin --> reg2
+admin --> edit1
+admin --> edit2
+
+manager --> view1
+manager ---> accept1
+manager --> edit3
+
+client --> view2
+client --> view3
+@enduml

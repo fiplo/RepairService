@@ -1,0 +1,41 @@
+@startuml
+|WebView|
+start
+:Pateikiamas vartotojo ID;
+note right: Vartotojam to padaryti įprastai nereikia, perduodame per URL
+|#lightgray|E. Sistema|
+:Siunčiama MySql užklausa;
+|#lightblue|MySql|
+:Gražinamas vartotojas;
+|#lightgray|E. Sistema|
+if (Ar ivyko klaida?) then (taip)
+    |WebView|
+    #pink:Įrašas nerastas;
+    kill
+else
+    |WebView|
+    :Parodoma vartotojo informacija;
+endif
+|WebView|
+if (Žiūri administratorius arba vartotojo savininkas?) then (taip)
+    :Leidžiama modifikuoti laukus;
+    |#lightgray|E. Sistema|
+    if (Duota forma turi klaidas) then
+        |WebView|
+        #pink:Klaidos formoje;
+        kill
+    endif
+    |#lightblue|MySql|
+    :Duomenys įkeliami į duombazę;
+    |#lightgray|E. Sistema|
+    if (Ar ivyko klaida?) then (taip)
+        |WebView|
+        #pink:Klaida MySql;
+        kill
+    else
+        |WebView|
+        :Parodoma atnaujinta įrašo informacija;
+    endif
+endif
+stop
+@enduml
